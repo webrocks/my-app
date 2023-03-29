@@ -1,8 +1,24 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import './App.css';
+import Homepage from "./pages/Homepage";
+import BookingPage from "./pages/BookingPage";
+
 function App() {
   return (
-    <div className="App">
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure accusantium suscipit quasi tempora dolor architecto harum dicta dolorum voluptate? Iusto blanditiis harum reiciendis recusandae quo deleniti eius minus iste dolore.
-    </div>
+      <>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={<Homepage />}
+            />
+            <Route
+              path="/booking"
+              element={<BookingPage />}
+            />
+          </Routes>
+        </BrowserRouter>
+      </>
   );
 }
 
