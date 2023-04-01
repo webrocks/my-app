@@ -1,21 +1,21 @@
 import { useNavSwitch } from '../context/NavSwitchContext';
 import Header from '../Header';
-import BookingForm from '../components/BookingForm';
 import Footer from '../Footer';
 
-function BookingPage({availableTimes, setAvailableTimes, submitForm}) {
+function Homepage() {
   const { isNavSwitchActive } = useNavSwitch();
   return (
       <div className={`wrapper ${isNavSwitchActive ? 'nav-active' : ''}`}>
         <Header />
-        <BookingForm
-          availableTimes={availableTimes}
-          setAvailableTimes={setAvailableTimes}
-          submitForm={submitForm}
-        />
+        <section className='confirmation-msg'>
+          <div className='container'>
+            <h2>Thank you!</h2>
+            <p>Your booking has been succesfully confirmed!</p>
+          </div>
+        </section>
         <Footer />
       </div>
   );
 }
 
-export default BookingPage;
+export default Homepage;

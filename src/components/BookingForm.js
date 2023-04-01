@@ -1,35 +1,37 @@
 import { useState } from "react";
-const availableTimeArray = [
-  '17:00',
-  '18:00',
-  '19:00',
-  '20:00',
-  '21:00',
-  '22:00',
-]
-const occasionsArr = ['None', 'Birthday', 'Anniversary']
+const occasionsArr = ['None', 'Birthday', 'Anniversary'];
 
-function BookingForm() {
+function BookingForm({availableTimes, setAvailableTimes, submitForm}) {
   const initDate = new Date();
-  initDate.setDate(initDate.getDate() + 1);
+  initDate.setDate(initDate.getDate());
   const YYYY = initDate.getFullYear();
   const MM = initDate.getMonth() < 10 ? "0" + (initDate.getMonth() + 1) : initDate.getMonth() + 1;
   const DD = initDate.getDate() < 10 ? "0" + initDate.getDate() : initDate.getDate();
-  const availableTimeOpts = availableTimeArray.map((opt, idx) => {
+
+  const availableTimesOpts = availableTimes.map((opt, idx) => {
     return <option key={idx} value={opt}>{opt}</option>;
   });
   const occasionsOpts = occasionsArr.map((opt, idx) => {
     return <option key={idx} value={opt}>{opt}</option>;
   });
 
-  const [chooseDate, setChooseDate] = useState(YYYY + "-" + MM + "-" + DD);
-  const [availableTime, setAvailableTime] = useState("17:00");
+  const minSelectDate = YYYY + "-" + MM + "-" + DD;
+  const [usrName, setUsrName] = useState("");
+  const [usrLastName, setUsrLastName] = useState("");
+  const [time, setTime] = useState(availableTimes[0]);
+  const [selectedDate, setSelectedDate] = useState(YYYY + "-" + MM + "-" + DD);
   const [guestsNum, setGuestsNum] = useState("1");
   const [occasion, setOccasion] = useState("None");
 
+  const handleDateChange = (e) => {
+    setSelectedDate(e.target.value);
+    setAvailableTimes({ selectedDate: new Date(e.target.value) });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(chooseDate, availableTime, guestsNum, occasion);
+    const formData = {usrName, usrLastName, selectedDate, time, guestsNum, occasion};
+    submitForm(formData);
   };
 
   return (
@@ -37,22 +39,47 @@ function BookingForm() {
       <div className="container">
         <form className="booking-form" onSubmit={handleSubmit}>
           <div className="row">
+            <label htmlFor="res-nme">Name <sup>*</sup></label>
+            <input
+              type="text"
+              minLength="2"
+              maxLength="150"
+              required
+              id="res-nme"
+              value={usrName}
+              onChange={(e) => setUsrName(e.target.value)}
+            />
+          </div>
+          <div className="row">
+            <label htmlFor="res-lastnme">Last Name <sup>*</sup></label>
+            <input
+              type="text"
+              minLength="2"
+              maxLength="150"
+              required
+              id="res-lastnme"
+              value={usrLastName}
+              onChange={(e) => setUsrLastName(e.target.value)}
+            />
+          </div>
+          <div className="row">
             <label htmlFor="res-date">Choose date</label>
             <input
               type="date"
               id="res-date"
-              value={chooseDate}
-              onChange={(e) => setChooseDate(e.target.value)}
+              value={selectedDate}
+              onChange={handleDateChange}
+              min={minSelectDate}
             />
           </div>
           <div className="row">
             <label htmlFor="res-time">Choose time</label>
             <select
               id="res-time"
-              value={availableTime}
-              onChange={(e) => setAvailableTime(e.target.value)}
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
             >
-              {availableTimeOpts}
+              {availableTimesOpts}
             </select>
           </div>
           <div className="row">

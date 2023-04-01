@@ -67,6 +67,10 @@ table {
 *, *:before, *:after {
 	box-sizing: border-box;
 }
+html,
+body {
+	background: var(--color-additional);
+}
 body {
 	min-width: 375px;
 	font: var(--default-font-weight) var(--default-font-size)/var(--default-line-height) var(--default-font-family);
@@ -156,6 +160,7 @@ p {
 /* common layout styling */
 .wrapper {
 	padding: 10px 0;
+	background: var(--color-white);
 }
 .wrapper.nav-active {
 	overflow: hidden;
@@ -502,4 +507,12 @@ p {
 	font-size: 16px;
 	line-height: 0;
 	cursor: pointer;
+}
+/* confirmation page */
+.confirmation-msg {
+	padding: 50px 20px;
+	border-radius: var(--default-corner-radius);
+}
+.confirmation-msg h2 {
+	color: var(--color-secondary);
 }
